@@ -5,8 +5,8 @@ use App\Classes\MemcacheCache;
 use App\Classes\CacheManager;
 
 $redisCache=new RedisCache();
-$redisCache->setHost('localhost');
-$redisCache->setPort('6379');
+$redisCache->setHost($_ENV["REDIS_HOST"]);
+$redisCache->setPort($_ENV["REDIS_PORT"]);
 $redisCache->connect();
 $redisCache->set('one','1');
 $redisCache->lpush('two','1');
@@ -15,8 +15,8 @@ echo $redisCache->get('one');
 
 
 $memcache=new MemcacheCache();
-$memcache->setHost('127.0.0.1');
-$memcache->setPort('11211');
+$memcache->setHost($_ENV["HOST"]);
+$memcache->setPort($_ENV["MEMCACHE_PORT"]);
 $redisCache->connect();
 $memcache->set('one','1');
 echo $cm->get('one');
@@ -26,7 +26,7 @@ echo $cm->get('one');
 */
 //$memcache->lpush('two','2'); 
 
-//using CacheManager
+//using CacheManager/Adaptar
 
 $rcm=new CacheManager($redisCache);
 $rcm->store('one','1');
